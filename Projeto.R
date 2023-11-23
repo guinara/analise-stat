@@ -87,9 +87,42 @@ nome_da_variavel_y <- "saidaSuspeitaObitos "
 
 
 
+#  É possível afirmar que aumentaram óbitos de 2020 para 2021?
+df_dados2020=read.csv("/cloud/project/esus-vepi.LeitoOcupacao_2020.csv")
+df_dados2021=read.csv("/cloud/project/esus-vepi.LeitoOcupacao_2021.csv")
+
+summary(df_dados2020)
+summary(df_dados2021$saidaConfirmadaObitos)
+
+#Criando o boxplot
+xp<-list(df_dados2020$saidaConfirmadaObitos,df_dados2021$saidaConfirmadaObitos)
+boxplot(xp,pch="-", col="lightblue", border="black", boxwex=0.3, names=c("2020","2021"))
 
 
 
+
+
+
+#Teste F para comparar as variâncias
+r_0 = 1
+var.test(x = df_dados2020$saidaConfirmadaObitos, 
+         y = df_dados2021$saidaConfirmadaObitos, 
+         ratio = 1, 
+         alternative = "two.sided", 
+         conf.level = .95)
+#diferentes pois o p é 0.00000000000000022, que é menor que 0.05
+
+
+#Teste t 
+t.test(x = df_dados2020$saidaConfirmadaObitos, 
+       y = df_dados2021$saidaConfirmadaObitos, 
+       alternative = "less", 
+       mu = 0, 
+       conf.level = 0.95,
+       var.equal = FALSE)
+
+
+#diferentes pois o p é 0.00000000000000022, que é menor que 0.05
 
 
 
